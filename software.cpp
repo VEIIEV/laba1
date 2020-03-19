@@ -13,51 +13,56 @@ void Software::Printsoft() const
 	cout << m_name << '\n' << m_type << '\n' << m_author << endl;
 }
 
-void Software::set_n(char* name, int length)
+
+void Software::set_n(char* name)
 {
+	int i = 0;
 	cout << "посимвольно введите имя" << endl;
-	for (int i = 0; i < length-1; i++) {
-		cin >> name[i];
-		static_cast<char>(name[i]);
-		this->m_name[i] = name[i];
+	while (*name) {
+		cin >> *(name);
+		this->m_name[i] = *(name);
+		*name++;
+		i++;
 	}
-	this->m_name[length - 1] = '\n';
 };
 
-void Software::set_t(char* type, int length)
+void Software::set_t(char* type)
 {
+	int i = 0;
 	cout << "посимвольно введите тип" << endl;
-	for (int i = 0; i < length-1; i++) {
-		cin >> type[i];
-		this->m_type[i] = type[i];
+	while (*type) {
+		cin >> *(type);
+		this->m_type[i] = *(type);
+		*type++;
+		i++;
 	}
-	this->m_name[length - 1] = '\n';
 };
 
-void Software::set_a(char* author, int length)
+void Software::set_a(char* author)
 {
+	int i = 0;
 	cout << "посимвольно введите автора" << endl;
-	for (int i = 0; i < length-1; i++) {
-		cin >> author[i];
-		this->m_author[i] = author[i];
+	while (*author) {
+		cin >> *(author);
+		this->m_author[i] = *(author);
+		*author++;
+		i++;
 	}
-	this->m_name[length - 1] = '\n';
 };
 
 
-void Software::set( char* namef,char* typef,char* authorf, int length) {
-	set_n(namef,length);
+void Software::set( char* namef,char* typef,char* authorf) {
+	set_n(namef);
 	cin.clear();
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	set_t(typef, length);
+	set_t(typef);
 	cin.clear(); 
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	set_a(authorf, length);
+	set_a(authorf);
 	cin.clear(); 
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-//int getx() { return x; };
 
 
 void Software::get(const Software &firstf) const  
@@ -70,9 +75,11 @@ void Software::get(const Software &firstf) const
 }
 
 
-
+//конструкторы
 Software::Software()
 {
+	m_value1 = 0;
+	m_value2 = 5;
 	m_name = new char[5]{ '?','?','?','?' };
 	m_type = new char[5]{ '?','?','?','?'};
 	m_author = new char[5]{ '?','?','?','?' };
@@ -81,6 +88,8 @@ Software::Software()
 
 Software::Software(char name[], char* type, char* author) 
 {
+	m_value1 = 0;
+	m_value2 = 5;
 	m_name = new char[5];
 	for (int i = 0; i < 5; i++) {
 		this->m_name[i] = name[i];
@@ -97,56 +106,78 @@ Software::Software(char name[], char* type, char* author)
 
 Software::Software(const Software& Software)
 {
+	m_value1 = 0;
+	m_value2 = 5;
 	m_name = Software.m_name;
 	m_type = Software.m_type;
 	m_author=Software.m_author;
 };
 //перегрузка операторов сравнения
 
-bool operator ==(const Math &value1_1, const Math &value1_2)
+bool operator ==(const Software&value1_1, const Software&value1_2)
 {
 	return (value1_1.m_value1 == value1_2.m_value1
 							  &&
 			value1_1.m_value2 == value1_2.m_value2);
 };
 
-bool operator !=(const Math& value1_1, const Math& value1_2)
+bool operator !=(const Software& value1_1, const Software& value1_2)
 {
 	return !(value1_1==value1_2);
 };
 
-bool operator<(const Math& value1_1, const Math& value1_2)
+bool operator<(const Software& value1_1, const Software& value1_2)
 {
 
 	return (value1_1.m_value1 < value1_2.m_value1);
 };
 
-bool operator>(const Math& value1_1, const Math& value1_2)
+bool operator>(const Software& value1_1, const Software& value1_2)
 {
 
 	return (value1_1.m_value1 > value1_2.m_value1);
 };
 
-bool operator<=(const Math& value1_1, const Math& value1_2)
+bool operator<=(const Software& value1_1, const Software& value1_2)
 {
 
 	return (value1_1.m_value1 <= value1_2.m_value1);
 };
-bool operator>=(const Math& value1_1, const Math& value1_2)
+bool operator>=(const Software& value1_1, const Software& value1_2)
 {
 
 	return (value1_1.m_value1 >= value1_2.m_value1);
 };
-
-std::ostream& operator <<(std::ostream& out, const Math& value1_1)
+//перегрузка операторов ввода ввывода
+std::ostream& operator <<(std::ostream& out, const Software& value1_1)
 {
 	out << value1_1.m_value1 << ", " << value1_1.m_value2 << endl;
 	return out;
 };
 
-std::istream& operator >>(std::istream& in, Math& value1_1)
+std::istream& operator >>(std::istream& in, Software& value1_1)
 {
 	in >> value1_1.m_value1;
 	in >> value1_1.m_value2;
 	return in;
 };
+
+//перегрузка оператора присваивания
+void Software::kopir(char* first, char* second)
+{
+	while (*second) {
+		*first++ = *second++;
+	}
+	*first = '\0';
+}
+
+ Software& Software::operator=(const Software& value1_1)
+    {
+        m_value1 = value1_1.m_value1;
+        m_value2 = value1_1.m_value2;
+        this->kopir(m_name, value1_1.m_name);
+        this->kopir(m_type, value1_1.m_type);
+        this->kopir(m_author, value1_1.m_author);
+        std::cout << "выполнение перегруженого оператора присваивания" << std::endl;
+        return *this;
+    };
