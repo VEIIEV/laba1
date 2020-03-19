@@ -1,17 +1,15 @@
 #pragma once
 #include <iostream>
-class Software 
+class Software
 {
 private:
-    int m_value1;
-    int m_value2;
     char* m_name;
     char* m_type;
     char* m_author;
 public:
-    Software() ;
-    Software(char* name, char* type, char* author) ;
-    Software(const Software& Software) ;
+    Software();
+    Software(char* name, char* type, char* author);
+    Software(const Software& Software);
 
     ~Software()
     {
@@ -19,9 +17,12 @@ public:
         delete[]  m_type;
         delete[] m_author;
     };
-    
-    void set(char* namef, char* typef, char* authorf);
+
     void get(const Software& firstf) const;
+    char get_name(int i)const;
+    char get_type(int i)const;
+    char get_author(int i)const;
+    void set(char* namef, char* typef, char* authorf);
     void set_n(char* name);
     void set_t(char* type);
     void set_a(char* author);
@@ -41,5 +42,3 @@ public:
 
     void Printsoft() const;
 };
-
-void List();
