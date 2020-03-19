@@ -11,14 +11,13 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	
-	//char a[5] = { "name" };
 	char* a;
 	a= new char[5] { '?', 'z', '?', '?' };
 	List();
 	Software firstl; //поумолчанию
 	Software secondl = Software(a, a, a); //с переменными
 	Software trel(a, a, a); // копирование
-	/*int toggle=1;
+	int toggle=1;
 	while (true)
 	{
 		cin >> toggle;
@@ -35,7 +34,7 @@ int main()
 		default: List();
 		}
 	}
-	*/
+	
 	Math first;
 	Math second;
 	if (first > second) { cout << "yes" << endl; }
